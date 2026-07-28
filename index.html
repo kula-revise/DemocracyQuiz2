@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Stuck | The coming of democracy | Kula Revise</title>
+<style>
+  :root {
+    /* Sunset clause: dark. Ink blue ground, two accents. */
+    --paper: #101E33;     /* page ground */
+    --sheet: #17293F;     /* card sheet */
+    --white: #1D3149;     /* inner panels, sources, explanations */
+    --ink: #E9EDF2;       /* text */
+    --ink-soft: #9FADC0;
+    --flame: #E4703A;     /* accent one: navigation and emphasis */
+    --on-flame: #101E33;  /* text on a solid flame block */
+    --leaf: #86C2A4;      /* accent two: anything the learner earned */
+    --on-leaf: #101E33;   /* text on a solid leaf block */
+    --hair: rgba(233,237,242,0.18);
+    --rail: rgba(233,237,242,0.12);
+    --tint: rgba(134,194,164,0.09);
+    --tint-rule: rgba(134,194,164,0.40);
+    --slot-bg: rgba(233,237,242,0.04);
+    --chipA-bg: rgba(228,112,58,0.20); --chipA-fg: #F0A87E;
+    --chipB-bg: rgba(146,178,214,0.16); --chipB-fg: #A8C4E4;
+    --chipN-bg: rgba(233,237,242,0.07); --chipN-fg: #A9B6C6;
+    --ev3-bg: rgba(228,112,58,0.13); --ev3-fg: #E4703A;
+    --ok-bg: rgba(134,194,164,0.16);
+    --bad-bg: rgba(159,173,192,0.10); --bad-border: #7C8AA0;
+    --btn-hover: #C55D2B;
+    --start-hover: #24384F;
+    --sans: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --serif: Georgia, 'Times New Roman', serif;
+  }
+  /* Bright light inversion. Same identity, readable on a cheap screen outdoors. */
+  body.bright {
+    --paper: #F1EEE7;
+    --sheet: #FAF8F3;
+    --white: #FFFDF8;
+    --ink: #14243E;
+    --ink-soft: #5A6779;
+    --flame: #B4501B;
+    --on-flame: #FFFDF8;
+    --leaf: #2E7D5B;
+    --on-leaf: #FFFDF8;
+    --hair: rgba(20,36,62,0.18);
+    --rail: rgba(20,36,62,0.12);
+    --tint: rgba(46,125,91,0.07);
+    --tint-rule: rgba(46,125,91,0.35);
+    --slot-bg: rgba(255,255,255,0.5);
+    --chipA-bg: #F5E2D3; --chipA-fg: #8A3A0C;
+    --chipB-bg: #DCE5F0; --chipB-fg: #33415A;
+    --chipN-bg: #E5E3DC; --chipN-fg: #4E5666;
+    --ev3-bg: #F5E2D3; --ev3-fg: #8A3A0C;
+    --ok-bg: rgba(46,125,91,0.12);
+    --bad-bg: rgba(20,36,62,0.06); --bad-border: #94A0B0;
+    --btn-hover: #96410F;
+    --start-hover: #0B182B;
+  }
+  .themebar { display: flex; justify-content: flex-end; margin-bottom: 0.9rem; }
+  .themebtn { background: transparent; border: 1px solid var(--hair); color: var(--ink-soft);
+    font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 600; padding: 0.42rem 0.75rem; cursor: pointer; }
+  .themebtn:hover { color: var(--ink); border-color: var(--ink-soft); }
+  .flourish .rule-ink { stroke: var(--ink); }
+  .flourish .rule-accent { stroke: var(--flame); }
+  .flourish .dot { fill: var(--flame); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; background: var(--paper); padding: 1.6rem 1rem 3rem; font-family: var(--serif); color: var(--ink); line-height: 1.6; }
+  .container { max-width: 720px; margin: 0 auto; }
+  .header-block { text-align: center; margin-bottom: 1.8rem; }
+  .flourish { display: block; margin: 0 auto 1.2rem; width: 100%; max-width: 260px; height: 26px; }
+  .eyebrow { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--flame); font-weight: 600; margin-bottom: 0.8rem; }
+  .masthead { font-family: var(--sans); font-size: clamp(1.9rem,5.4vw,2.9rem); font-weight: 600; line-height: 1.14; letter-spacing: -0.015em; }
+  .sub { font-size: 0.98rem; color: var(--ink-soft); margin-top: 0.55rem; }
+  .intro-box { background: var(--sheet); border-top: 2px solid var(--ink); padding: 1.2rem 1.35rem 1.35rem; margin-bottom: 1.3rem; }
+  .intro-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--flame); font-weight: 600; margin-bottom: 0.55rem; }
+  .intro-text { line-height: 1.7; font-size: 0.98rem; }
+  .picker-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--flame); font-weight: 600; margin: 1.4rem 0 0.7rem; }
+  .pick { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; background: var(--sheet); border: none; border-top: 1px solid var(--hair); cursor: pointer; font-family: var(--serif); text-align: left; font-size: 1rem; color: var(--ink); margin-bottom: 0.5rem; transition: all 0.18s; }
+  .pick:hover { background: var(--white); transform: translateX(3px); }
+  .pick .pn { font-family: var(--sans); font-size: 0.74rem; color: var(--ink-soft); }
+  .pick.full { background: var(--white); color: var(--ink); border-top: 2px solid var(--flame); }
+  .pick.full .pn { color: var(--flame); }
+  .top-bar { margin-bottom: 1.5rem; }
+  .top-meta { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--flame); font-weight: 600; margin-bottom: 0.5rem; gap: 1rem; flex-wrap: wrap; }
+  .top-count { color: var(--ink-soft); font-weight: 400; text-transform: none; letter-spacing: 0.04em; }
+  .track { height: 2px; background: var(--rail); overflow: hidden; }
+  .fill { height: 100%; background: var(--flame); transition: width 0.35s ease; width: 0%; }
+  .card { background: var(--sheet); border-top: 2px solid var(--ink); padding: 1.5rem 1.4rem 1.6rem; margin-bottom: 1.2rem; }
+  .card h2 { font-family: var(--sans); font-size: 1.3rem; font-weight: 600; line-height: 1.25; margin-bottom: 0.8rem; }
+  .card p { font-size: 1rem; line-height: 1.72; margin-bottom: 0.9rem; }
+  .card p:last-child { margin-bottom: 0; }
+  .chip { display: inline-block; padding: 0.22rem 0.62rem; font-family: var(--sans); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+  .chip-recall { background: var(--chipA-bg); color: var(--chipA-fg); }
+  .chip-understand { background: var(--chipB-bg); color: var(--chipB-fg); }
+  .chip-apply { background: var(--leaf); color: var(--on-leaf); }
+  .stage-tag { margin-bottom: 0.9rem; }
+  .q-text { font-size: 1.14rem; line-height: 1.5; margin-bottom: 1.15rem; }
+  .options { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.15rem; }
+  .option { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.95rem 1.05rem; background: var(--paper); border: 1px solid var(--hair); cursor: pointer; font-family: inherit; text-align: left; font-size: 0.95rem; line-height: 1.55; color: var(--ink); transition: all 0.18s; width: 100%; }
+  .option:hover:not(:disabled) { background: var(--white); border-color: var(--flame); }
+  .option:disabled { cursor: default; }
+  .option.selected { background: var(--white); border-color: var(--ink); border-width: 2px; padding: 0.89rem 0.99rem; }
+  .option.correct { background: var(--ok-bg); border-color: var(--leaf); border-width: 2px; padding: 0.89rem 0.99rem; }
+  .option.wrong { background: var(--bad-bg); border-color: var(--bad-border); border-width: 2px; padding: 0.89rem 0.99rem; }
+  .option.dimmed { opacity: 0.5; }
+  .opt-letter { font-family: var(--sans); font-weight: 600; color: var(--flame); min-width: 1.1rem; }
+  .opt-text { flex: 1; }
+  .opt-mark { font-weight: bold; font-size: 1.05rem; }
+  .explanation { background: var(--white); border-top: 1px solid var(--hair); border-left: 3px solid var(--flame); padding: 1.05rem 1.15rem; }
+  .expl-label { font-family: var(--sans); font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--flame); font-weight: 600; margin-bottom: 0.5rem; }
+  .expl-text { line-height: 1.7; font-size: 0.93rem; }
+  .nav { display: flex; justify-content: flex-end; gap: 0.8rem; margin-top: 0.4rem; }
+  .btn-primary { padding: 0.76rem 1.5rem; background: var(--flame); border: none; color: var(--on-flame); font-family: var(--sans); font-size: 0.93rem; cursor: pointer; font-weight: 600; }
+  .btn-primary:hover:not(:disabled) { background: var(--btn-hover); }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn-secondary { padding: 0.72rem 1.2rem; background: transparent; border: 1px solid var(--hair); color: var(--ink); font-family: var(--sans); font-size: 0.88rem; cursor: pointer; }
+  .score-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 0.9rem; margin-bottom: 1.3rem; }
+  .score-block { background: var(--sheet); border-top: 2px solid var(--ink); padding: 1.25rem 0.8rem; text-align: center; }
+  .score-num { font-family: var(--sans); font-size: 2.3rem; font-weight: 600; line-height: 1; }
+  .score-den { font-size: 1.05rem; color: var(--ink-soft); font-weight: 400; }
+  .score-word { font-family: var(--sans); font-size: 1.5rem; font-weight: 600; color: var(--flame); line-height: 1.15; }
+  .score-label { font-family: var(--sans); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-top: 0.5rem; font-weight: 600; }
+  .grade-desc { text-align: center; margin-bottom: 1.5rem; padding: 0 0.5rem; line-height: 1.7; }
+  .breakdown { background: var(--sheet); border-top: 2px solid var(--ink); padding: 1.25rem; margin-bottom: 1.2rem; }
+  .breakdown-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--leaf); font-weight: 600; margin-bottom: 1rem; text-align: center; }
+  .bd-row { display: grid; grid-template-columns: 1fr 100px 46px; gap: 0.7rem; align-items: center; margin-bottom: 0.7rem; font-size: 0.86rem; }
+  .bd-name { font-family: var(--sans); font-size: 0.82rem; }
+  .bd-bar { height: 8px; background: var(--rail); overflow: hidden; }
+  .bd-fill { height: 100%; background: var(--leaf); transition: width 0.4s; }
+  .bd-score { color: var(--ink-soft); text-align: right; font-weight: 600; font-family: var(--sans); }
+  .compare { background: var(--white); border-top: 1px solid var(--hair); border-left: 3px solid var(--leaf); padding: 1.1rem 1.2rem; margin-bottom: 1.2rem; }
+  .compare label { display: block; font-family: var(--sans); font-size: 0.8rem; margin-bottom: 0.5rem; }
+  .compare input { font-family: var(--sans); font-size: 1rem; padding: 0.5rem 0.6rem; width: 5.5rem; border: 1px solid var(--hair); background: var(--sheet); color: var(--ink); }
+  .compare-out { margin-top: 0.8rem; font-size: 0.95rem; line-height: 1.65; }
+  .hidden { display: none !important; }
+  .footer { text-align: center; font-family: var(--sans); font-size: 0.76rem; color: var(--ink-soft); margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--hair); line-height: 1.65; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="themebar"><button class="themebtn" id="theme-btn" type="button">Bright light</button></div>
+
+
+  <div id="start-screen">
+    <div class="header-block">
+      <svg class="flourish" viewBox="0 0 260 26" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <line class="rule-ink" x1="0" y1="2" x2="130" y2="24" stroke-width="1.4"/>
+        <line class="rule-accent" x1="260" y1="2" x2="130" y2="24" stroke-width="1.4"/>
+        <circle class="dot" cx="130" cy="24" r="2.4"/>
+      </svg>
+      <div class="eyebrow">Kula Revise &middot; Grade 12 History &middot; Coming of democracy</div>
+      <h1 class="masthead">What Stuck</h1>
+      <div class="sub">After Lesson 5</div>
+    </div>
+    <div class="intro-box">
+      <div class="intro-label">Before you start</div>
+      <p class="intro-text">The same eighteen facts as the first check, asked from the other direction, so remembering the shape of the earlier questions will not help you. You have done the lessons now. This is about what is still there.</p>
+    </div>
+    <div class="picker-label">Choose what to answer</div>
+    <div id="picker"></div>
+    <div class="footer">About 12 minutes for the full set. Have your score from the first check ready.</div>
+  </div>
+
+  <div id="quiz-screen" class="hidden">
+    <div class="top-bar">
+      <div class="top-meta"><span id="sec-name">Section</span><span class="top-count" id="q-count">Question 1</span></div>
+      <div class="track"><div class="fill" id="fill"></div></div>
+    </div>
+    <div class="card" id="q-card"></div>
+    <div class="nav"><button class="btn-primary" id="next-btn">Continue &rarr;</button></div>
+  </div>
+
+  <div id="results-screen" class="hidden">
+    <div class="header-block">
+      <div class="eyebrow">After the lessons</div>
+      <h1 class="masthead" style="font-size: clamp(1.7rem,4.8vw,2.5rem);">Where You Stand</h1>
+    </div>
+    <div class="score-row">
+      <div class="score-block"><div class="score-num"><span id="r-correct">0</span><span class="score-den">/<span id="r-total">0</span></span></div><div class="score-label">Correct</div></div>
+      <div class="score-block"><div class="score-word" id="r-band">-</div><div class="score-label">Where you are</div></div>
+    </div>
+    <div class="grade-desc" id="r-desc"></div>
+    <div class="compare hidden" id="compare-box">
+      <label for="prior-in">Your score from the first check, out of 18</label>
+      <input type="number" id="prior-in" min="0" max="18" inputmode="numeric">
+      <button class="btn-secondary" id="prior-btn" style="margin-left:0.5rem;">Compare</button>
+      <div class="compare-out" id="compare-out"></div>
+    </div>
+    <div class="breakdown"><div class="breakdown-label">By kind of question</div><div id="r-tiers"></div></div>
+    <div class="breakdown"><div class="breakdown-label">By section</div><div id="r-sections"></div></div>
+    <div class="card">
+      <div class="stage-tag"><span class="chip chip-recall">Next</span></div>
+      <p>Look at the section breakdown above, not the total. Go back to the lesson covering your weakest section and run it again.</p><p>Then write the essay question out by hand in one hour, with nothing in front of you.</p>
+    </div>
+    <div class="nav" style="justify-content:center;"><button class="btn-primary" id="redo-btn">&#8635; Choose again</button></div>
+    <div class="footer">The essay: NSC History P2, May and June 2025, Question 5.</div>
+  </div>
+</div>
+
+<script>
+const ITEMS = [
+  {
+    "q": "FW de Klerk became president in 1989 after which leader was pushed out?",
+    "options": [
+      "PW Botha",
+      "John Vorster",
+      "Hendrik Verwoerd",
+      "Pik Botha"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}, after a stroke and a quarrel with his own party. {opt1} had gone in 1978 and {opt2} was killed in 1966. {opt3} was a minister, not the president. You need the handover in your context paragraph, because it is where the memo starts. Get the handover right and your context paragraph earns its marks.",
+    "section": "Why Anyone Sat Down",
+    "tier": "Recall"
+  },
+  {
+    "q": "Nelson Mandela walked out of prison on which date?",
+    "options": [
+      "11 February 1990",
+      "2 February 1990",
+      "27 April 1994",
+      "10 May 1994"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. The unbanning announcement came nine days earlier, on {opt1}. {opt2} is the election and {opt3} the inauguration, both four years later. A marker reads an exact date as evidence and a vague one as background. Use the exact date and you earn an evidence mark.",
+    "section": "Why Anyone Sat Down",
+    "tier": "Recall"
+  },
+  {
+    "q": "The state could not crush resistance and the movements could not seize power. What does that explain?",
+    "options": [
+      "Why negotiation became a possibility for both sides by 1989",
+      "Why the ANC suspended its armed struggle in August 1990",
+      "Why the National Party won the whites only referendum in 1992",
+      "Why the Conservative Party refused to attend the CODESA talks"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. A deadlock makes talking possible without making it happen. You need that gap, because it is where the marks for political will sit. {opt1}, {opt2} and {opt3} each have their own separate causes and none of them follows from the deadlock alone.",
+    "section": "Why Anyone Sat Down",
+    "tier": "Understand"
+  },
+  {
+    "q": "A learner writes: 'Mandela was freed in 1990 on condition that he rejected violence.' What is the error?",
+    "options": [
+      "His release was unconditional, and that condition came in a 1985 offer",
+      "There is no error, since the condition was part of the 1990 release",
+      "The year is wrong, because he was actually released during 1989",
+      "The error is that it was PW Botha who ordered his release"
+    ],
+    "correct": 0,
+    "explanation": "{opt0} is the error. Botha made that conditional offer in 1985 and Mandela refused it. The 1990 release carried no conditions. {opt1} accepts the mistake, {opt2} moves the year and {opt3} swaps the president. That difference is worth a mark to you. Refusing the 1985 offer is what made the 1990 release unconditional.",
+    "section": "Why Anyone Sat Down",
+    "tier": "Apply"
+  },
+  {
+    "q": "At the same Pretoria meeting in August 1990, what did the government agree to do?",
+    "options": [
+      "Lift the state of emergency",
+      "Unban the liberation movements",
+      "Release Nelson Mandela from prison",
+      "Repeal the apartheid laws"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. {opt1} and {opt2} had both already happened in February 1990, six months earlier. {opt3} was never agreed at any negotiating meeting. You need both halves of this pairing to show a concession on each side. Name both halves and you earn the mark for a concession on each side.",
+    "section": "Agreements Nobody Had to Keep",
+    "tier": "Recall"
+  },
+  {
+    "q": "CODESA opened with nineteen parties at which venue?",
+    "options": [
+      "The World Trade Centre at Kempton Park",
+      "Groote Schuur, the president's residence in Cape Town",
+      "The Union Buildings in the city of Pretoria",
+      "Shell House, the ANC head office in Johannesburg"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}, which is also where the AWB drove in an armoured vehicle in 1993. {opt1} hosted the 1990 talks. {opt2} is the seat of government. {opt3} was the ANC head office. Naming the venue costs you one clause and gains you an evidence mark from the marker.",
+    "section": "Agreements Nobody Had to Keep",
+    "tier": "Recall"
+  },
+  {
+    "q": "Why did signing the Declaration of Intent not settle the disagreement between the parties?",
+    "options": [
+      "Because it set out aims without saying how the constitution would be written",
+      "Because two of the parties present at CODESA had refused to sign it",
+      "Because the ANC withdrew from the CODESA talks shortly after that",
+      "Because it was signed before Nelson Mandela had been released from prison"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. Agreeing where you are going is not agreeing how to get there. The hard question was what share of an elected assembly would have to agree before a clause entered the constitution. {opt1}, {opt2} and {opt3} are all wrong in fact or in timing. CODESA 2 deadlocked on exactly that number in May 1992. Use it to explain the deadlock and you earn analysis marks.",
+    "section": "Agreements Nobody Had to Keep",
+    "tier": "Understand"
+  },
+  {
+    "q": "A learner writes: 'De Klerk called the 1992 referendum because he knew he would win it.' What is the error?",
+    "options": [
+      "He called it after by-election losses, so the result was genuinely in doubt",
+      "He never called any referendum at all during that particular year",
+      "It was Mandela who called for a referendum to be held in 1992",
+      "The referendum was held only after CODESA had already collapsed"
+    ],
+    "correct": 0,
+    "explanation": "{opt0} is the error. The National Party had been losing by-elections to the Conservative Party. A no vote would have ended the talks and his career. {opt1}, {opt2} and {opt3} are all factually wrong, and the referendum in March came two months before CODESA 2 broke down. The risk is exactly what makes the referendum evidence of political will, so do not describe it as safe. If you call the referendum safe, you lose the point.",
+    "section": "Agreements Nobody Had to Keep",
+    "tier": "Apply"
+  },
+  {
+    "q": "What did the Boipatong attack of June 1992 do to the negotiations?",
+    "options": [
+      "The ANC withdrew from them and CODESA collapsed",
+      "The government suspended the state of emergency again",
+      "The parties immediately signed the Record of Understanding",
+      "The date of the first election was brought forward"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. {opt1} is wrong. {opt2} came three months later, in September, and it restarted the talks rather than following the attack at once. {opt3} is wrong. You need the collapse in your essay, because it is the strongest evidence against your own line. A marker rewards you for answering the strongest evidence against your own line.",
+    "section": "The Year It Should Have Ended",
+    "tier": "Recall"
+  },
+  {
+    "q": "A general strike joined by millions of workers was used in 1992 for what purpose?",
+    "options": [
+      "To show the government what leaving the table would cost it",
+      "To demand higher wages from the country's mining companies",
+      "To stop the whites only referendum from being held at all",
+      "To force Inkatha into signing the National Peace Accord"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. This was political pressure, not a wage dispute, so {opt1} is wrong. It came after the referendum, so {opt2} is wrong. {opt3} is wrong. A strike makes the cost of a collapsed negotiation visible, and saying so turns a fact into an argument. Say what the strike was for and you earn more than a naming mark.",
+    "section": "The Year It Should Have Ended",
+    "tier": "Understand"
+  },
+  {
+    "q": "Why does the Record of Understanding matter to an argument about political will?",
+    "options": [
+      "Because both sides came back within three months of Boipatong",
+      "Because it was the first agreement the two sides had ever signed",
+      "Because it forced the Conservative Party back into the talks",
+      "Because it was signed by all twenty seven peace accord organisations"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. The timing is the argument. Nothing forced either side to return after an attack that had ended the talks. {opt1} is wrong, because Groote Schuur came two years earlier. {opt2} and {opt3} are wrong. Say three months in your paragraph and the evidence does the judging for you. Write three months in your paragraph and a marker sees the judgement without you asserting it.",
+    "section": "The Year It Should Have Ended",
+    "tier": "Understand"
+  },
+  {
+    "q": "A learner writes: 'After Hani was killed, the government went on television to appeal for calm.' What is the error?",
+    "options": [
+      "Mandela made that appeal, and he held no government office",
+      "There is nothing wrong with the statement as it is written",
+      "No appeal for calm was made by anybody at that time",
+      "The appeal came only after the AWB attack later that year"
+    ],
+    "correct": 0,
+    "explanation": "{opt0} is the error. Mandela spoke to the nation while the state was still run by the National Party. {opt1} accepts the mistake. {opt2} and {opt3} are wrong. That detail is the mark, because a man with no official power calmed the country. Name the office he did not hold and you earn the evidence mark.",
+    "section": "The Year It Should Have Ended",
+    "tier": "Apply"
+  },
+  {
+    "q": "Who proposed the sunset clause?",
+    "options": [
+      "Joe Slovo, leader of the Communist Party",
+      "Roelf Meyer, a minister in the National Party",
+      "Mangosuthu Buthelezi of the Inkatha Freedom Party",
+      "Cyril Ramaphosa of the African National Congress"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}, which is what makes this such strong evidence. The leader of the Communist Party proposed keeping apartheid civil servants in their jobs. {opt1} and {opt3} negotiated the Record of Understanding. {opt2} stayed outside until the final week. Name him and his party, because that one detail earns you the mark.",
+    "section": "Getting to the Vote",
+    "tier": "Recall"
+  },
+  {
+    "q": "Which party agreed to contest the 1994 election only days before voting began?",
+    "options": [
+      "The Inkatha Freedom Party, led by Buthelezi",
+      "The Pan Africanist Congress, which had boycotted CODESA",
+      "The Conservative Party, which opposed the whole process",
+      "The Freedom Front, formed by right-wing Afrikaners"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. {opt1} took part from the start of the campaign. {opt2} stayed out of the election. {opt3} was formed by right-wing Afrikaners who chose to contest the election rather than fight it. Getting these four straight stops your last paragraph turning into a blur of party names. Keep the four parties straight and you stop losing marks in your last paragraph.",
+    "section": "Getting to the Vote",
+    "tier": "Recall"
+  },
+  {
+    "q": "Ballot papers had to be altered in the week before the vote. Why?",
+    "options": [
+      "Because the Inkatha Freedom Party had only just agreed to stand",
+      "Because two other parties withdrew from the election at that point",
+      "Because a further province had been added to the interim constitution",
+      "Because the dates of the election had been changed at short notice"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. The papers were printed without the party on them, so stickers were added. {opt1}, {opt2} and {opt3} are all wrong. It is a small administrative fact. Use it and you show a marker exactly how narrow the margin was.",
+    "section": "Getting to the Vote",
+    "tier": "Understand"
+  },
+  {
+    "q": "Which two parties, apart from the ANC, entered the Government of National Unity?",
+    "options": [
+      "The National Party and the Inkatha Freedom Party",
+      "The Freedom Front and the Democratic Party",
+      "The Pan Africanist Congress and the Conservative Party",
+      "The Democratic Party and the Pan Africanist Congress"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}, because they were the only other parties above the five per cent line. The parties in {opt1}, {opt2} and {opt3} won seats in parliament without reaching that threshold. Link the result back to the sunset clause and your conclusion answers the question instead of summarising it. A marker pays for that link.",
+    "section": "The Settlement Itself",
+    "tier": "Recall"
+  },
+  {
+    "q": "Mandela became president with Mbeki and De Klerk as his deputies. What does that show?",
+    "options": [
+      "That the compromise agreed beforehand was actually carried out",
+      "That the ANC had lost its majority in the new parliament",
+      "That the National Party had won the Western Cape province",
+      "That the election result was being disputed by the other parties"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. The leader of the party that had run apartheid became a deputy president. {opt1}, {opt2} and {opt3} are all wrong. This unit has defined political will as an agreement kept when keeping it is expensive. Say that in your conclusion and you earn a judgement mark.",
+    "section": "The Settlement Itself",
+    "tier": "Understand"
+  },
+  {
+    "q": "A learner writes: 'The negotiation process ran from 1989 to the final TRC report in 2003.' What is the error?",
+    "options": [
+      "The process this question covers ends with the election in 1994",
+      "The process actually began in 1985 rather than in the year 1989",
+      "The final report of the commission was published during 1998",
+      "There is no error here, because both of those dates are correct"
+    ],
+    "correct": 0,
+    "explanation": "{opt0}. Stretching the range to 2003 pulls in years the question never asked about. {opt1} is wrong as a boundary, though contact did begin before 1989, and you use that only to explain 1990. {opt2} is wrong. {opt3} accepts the mistake. Check the dates in the question before you plan, because content outside them scores nothing.",
+    "section": "The Settlement Itself",
+    "tier": "Apply"
+  }
+];
+
+const BANDS = [
+  {
+    "min": 84,
+    "band": "Excellent",
+    "desc": "The facts are secure. Stop revising content and go and write the essay question out under timed conditions, by hand, in one hour."
+  },
+  {
+    "min": 67,
+    "band": "Strong",
+    "desc": "Nearly there. Reread the lesson covering your weakest section below, then write the essay out under time."
+  },
+  {
+    "min": 50,
+    "band": "Solid",
+    "desc": "Go back to the two weakest sections in the breakdown and run those lessons again before you attempt the essay."
+  },
+  {
+    "min": 34,
+    "band": "Patchy",
+    "desc": "The argument is ahead of the detail. Run the lesson for your weakest section again, then take this check once more."
+  },
+  {
+    "min": 0,
+    "band": "Start again",
+    "desc": "Work through Lessons 1 to 4 again in order. The dates and names are what turn your argument into marks, and they are not there yet."
+  }
+];
+
+const SHOW_COMPARE = true;
+
+const TIERS = ["Recall","Understand","Apply"];
+const TIERCLS = { Recall:"chip-recall", Understand:"chip-understand", Apply:"chip-apply" };
+const TIERLABEL = {
+  Recall:"Recall &middot; the fact itself",
+  Understand:"Understand &middot; what it means",
+  Apply:"Apply &middot; spot the mistake"
+};
+
+const state = { items:[], idx:0, answers:{}, revealed:{}, order:{}, scope:"full" };
+
+const startScreen=document.getElementById("start-screen");
+const quizScreen=document.getElementById("quiz-screen");
+const resultsScreen=document.getElementById("results-screen");
+const qCard=document.getElementById("q-card");
+const nextBtn=document.getElementById("next-btn");
+
+function sectionNames(){
+  const out=[];
+  ITEMS.forEach(i=>{ if(!out.includes(i.section)) out.push(i.section); });
+  return out;
+}
+function buildPicker(){
+  const p=document.getElementById("picker");
+  p.innerHTML="";
+  const full=document.createElement("button");
+  full.className="pick full";
+  full.innerHTML='<span>The Full Set</span><span class="pn">'+ITEMS.length+' questions</span>';
+  full.addEventListener("click",()=>start("full"));
+  p.appendChild(full);
+  sectionNames().forEach(name=>{
+    const n=ITEMS.filter(i=>i.section===name).length;
+    const b=document.createElement("button");
+    b.className="pick";
+    b.innerHTML='<span>'+name+'</span><span class="pn">'+n+' questions</span>';
+    b.addEventListener("click",()=>start(name));
+    p.appendChild(b);
+  });
+}
+function start(scope){
+  state.scope=scope;
+  state.items = scope==="full" ? ITEMS.slice() : ITEMS.filter(i=>i.section===scope);
+  state.idx=0; state.answers={}; state.revealed={}; state.order={};
+  startScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
+  render();
+}
+nextBtn.addEventListener("click",()=>{
+  if(state.idx<state.items.length-1){ state.idx++; render(); } else { showResults(); }
+});
+document.getElementById("redo-btn").addEventListener("click",()=>location.reload());
+
+function render(){
+  const item=state.items[state.idx];
+  const gi=state.idx;
+  document.getElementById("sec-name").textContent=item.section;
+  document.getElementById("q-count").textContent="Question "+(gi+1)+" of "+state.items.length;
+  document.getElementById("fill").style.width=(((gi+1)/state.items.length)*100)+"%";
+  if(!state.order[gi]){
+    const arr=item.options.map((_,i)=>i);
+    for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=arr[i]; arr[i]=arr[j]; arr[j]=t; }
+    state.order[gi]=arr;
+  }
+  const order=state.order[gi];
+  const revealed=state.revealed[gi];
+  const selected=state.answers[gi];
+  // {optN} resolves to the letter that option N carries on this learner's screen.
+  const letterFor={};
+  order.forEach((orig,pos)=>{ letterFor[orig]=String.fromCharCode(65+pos); });
+  const resolve=(s)=>String(s).replace(/\{opt(\d+)\}/g,(m,n)=>letterFor[n]!==undefined?letterFor[n]:m);
+  let optsHtml="";
+  order.forEach((orig,pos)=>{
+    let cls="option"; let mark="";
+    if(revealed){
+      if(orig===item.correct){ cls+=" correct"; mark='<span class="opt-mark">&#10003;</span>'; }
+      else if(orig===selected){ cls+=" wrong"; mark='<span class="opt-mark">&#10007;</span>'; }
+      else cls+=" dimmed";
+    } else if(orig===selected) cls+=" selected";
+    optsHtml+='<button class="'+cls+'" data-opt="'+orig+'" '+(revealed?"disabled":"")+'>'
+      +'<span class="opt-letter">'+String.fromCharCode(65+pos)+'</span>'
+      +'<span class="opt-text">'+resolve(item.options[orig])+'</span>'+mark+'</button>';
+  });
+  qCard.innerHTML='<div class="stage-tag"><span class="chip '+TIERCLS[item.tier]+'">'+TIERLABEL[item.tier]+'</span></div>'
+    +'<div class="q-text">'+resolve(item.q)+'</div><div class="options">'+optsHtml+'</div>'
+    +(revealed?'<div class="explanation"><div class="expl-label">Why</div><div class="expl-text">'+item.explanation+'</div></div>':'');
+  if(!revealed){
+    qCard.querySelectorAll("[data-opt]").forEach(b=>{
+      b.addEventListener("click",()=>{ state.answers[gi]=parseInt(b.dataset.opt); state.revealed[gi]=true; render(); });
+    });
+  }
+  nextBtn.disabled=!state.revealed[gi];
+  nextBtn.innerHTML = state.idx===state.items.length-1 ? "See results &rarr;" : "Continue &rarr;";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function showResults(){
+  quizScreen.classList.add("hidden");
+  resultsScreen.classList.remove("hidden");
+  let correct=0;
+  state.items.forEach((it,i)=>{ if(state.answers[i]===it.correct) correct++; });
+  const total=state.items.length;
+  const pct=total?Math.round(correct/total*100):0;
+  document.getElementById("r-correct").textContent=correct;
+  document.getElementById("r-total").textContent=total;
+  let band="-",desc="";
+  for(const b of BANDS){ if(pct>=b.min){ band=b.band; desc=b.desc; break; } }
+  document.getElementById("r-band").textContent=band;
+  document.getElementById("r-desc").textContent=desc;
+
+  const tb=document.getElementById("r-tiers"); tb.innerHTML="";
+  TIERS.forEach(t=>{
+    const ids=state.items.map((it,i)=>it.tier===t?i:null).filter(i=>i!==null);
+    if(!ids.length) return;
+    const got=ids.filter(i=>state.answers[i]===state.items[i].correct).length;
+    const p=Math.round(got/ids.length*100);
+    tb.innerHTML+='<div class="bd-row"><div class="bd-name">'+t+'</div><div class="bd-bar"><div class="bd-fill" style="width:'+p+'%"></div></div><div class="bd-score">'+got+'/'+ids.length+'</div></div>';
+  });
+  const sb=document.getElementById("r-sections"); sb.innerHTML="";
+  const names=[]; state.items.forEach(i=>{ if(!names.includes(i.section)) names.push(i.section); });
+  names.forEach(n=>{
+    const ids=state.items.map((it,i)=>it.section===n?i:null).filter(i=>i!==null);
+    const got=ids.filter(i=>state.answers[i]===state.items[i].correct).length;
+    const p=Math.round(got/ids.length*100);
+    sb.innerHTML+='<div class="bd-row"><div class="bd-name">'+n+'</div><div class="bd-bar"><div class="bd-fill" style="width:'+p+'%"></div></div><div class="bd-score">'+got+'/'+ids.length+'</div></div>';
+  });
+
+  if(SHOW_COMPARE && state.scope==="full"){
+    const box=document.getElementById("compare-box");
+    box.classList.remove("hidden");
+    const params=new URLSearchParams(window.location.search);
+    const prior=params.get("prior");
+    const input=document.getElementById("prior-in");
+    if(prior!==null && prior!=="" && !isNaN(parseInt(prior))) input.value=parseInt(prior);
+    const run=()=>{
+      const v=parseInt(input.value);
+      const out=document.getElementById("compare-out");
+      if(isNaN(v)){ out.textContent="Type the score you got before the lessons, then press compare."; return; }
+      const diff=correct-v;
+      if(diff>0) out.textContent="You have gone from "+v+" out of "+total+" to "+correct+". That is "+diff+" more facts holding than before you started the lessons.";
+      else if(diff===0) out.textContent="Same score as before, "+correct+" out of "+total+". Different questions, though, so look at the section breakdown to see where the gaps moved.";
+      else out.textContent="You scored "+v+" before and "+correct+" now. Check the section breakdown, go back to the weakest lesson, and take this again.";
+    };
+    document.getElementById("prior-btn").addEventListener("click",run);
+    if(input.value!=="") run();
+  }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+buildPicker();
+
+const themeBtn=document.getElementById("theme-btn");
+themeBtn.addEventListener("click",()=>{
+  const bright=document.body.classList.toggle("bright");
+  themeBtn.textContent = bright ? "Low light" : "Bright light";
+});
+</script>
+</body>
+</html>
