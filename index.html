@@ -32,7 +32,7 @@
     --sans: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --serif: Georgia, 'Times New Roman', serif;
   }
-  /* Bright light inversion. Same identity, readable on a cheap screen outdoors. */
+  /* Bright light inversion, kept but not exposed. Add class "bright" to body to switch. */
   body.bright {
     --paper: #F1EEE7;
     --sheet: #FAF8F3;
@@ -57,11 +57,6 @@
     --btn-hover: #96410F;
     --start-hover: #0B182B;
   }
-  .themebar { display: flex; justify-content: flex-end; margin-bottom: 0.9rem; }
-  .themebtn { background: transparent; border: 1px solid var(--hair); color: var(--ink-soft);
-    font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
-    font-weight: 600; padding: 0.42rem 0.75rem; cursor: pointer; }
-  .themebtn:hover { color: var(--ink); border-color: var(--ink-soft); }
   .flourish .rule-ink { stroke: var(--ink); }
   .flourish .rule-accent { stroke: var(--flame); }
   .flourish .dot { fill: var(--flame); }
@@ -105,7 +100,7 @@
   .option.correct { background: var(--ok-bg); border-color: var(--leaf); border-width: 2px; padding: 0.89rem 0.99rem; }
   .option.wrong { background: var(--bad-bg); border-color: var(--bad-border); border-width: 2px; padding: 0.89rem 0.99rem; }
   .option.dimmed { opacity: 0.5; }
-  .opt-letter { font-family: var(--sans); font-weight: 600; color: var(--flame); min-width: 1.1rem; }
+  .opt-letter {  font-weight: 600; color: var(--flame); min-width: 1.1rem; }
   .opt-text { flex: 1; }
   .opt-mark { font-weight: bold; font-size: 1.05rem; }
   .explanation { background: var(--white); border-top: 1px solid var(--hair); border-left: 3px solid var(--flame); padding: 1.05rem 1.15rem; }
@@ -118,30 +113,28 @@
   .btn-secondary { padding: 0.72rem 1.2rem; background: transparent; border: 1px solid var(--hair); color: var(--ink); font-family: var(--sans); font-size: 0.88rem; cursor: pointer; }
   .score-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 0.9rem; margin-bottom: 1.3rem; }
   .score-block { background: var(--sheet); border-top: 2px solid var(--ink); padding: 1.25rem 0.8rem; text-align: center; }
-  .score-num { font-family: var(--sans); font-size: 2.3rem; font-weight: 600; line-height: 1; }
+  .score-num { font-size: 2.3rem; font-weight: 700; line-height: 1; }
   .score-den { font-size: 1.05rem; color: var(--ink-soft); font-weight: 400; }
-  .score-word { font-family: var(--sans); font-size: 1.5rem; font-weight: 600; color: var(--flame); line-height: 1.15; }
+  .score-word { font-size: 1.5rem; font-weight: 700; color: var(--flame); line-height: 1.15; }
   .score-label { font-family: var(--sans); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-top: 0.5rem; font-weight: 600; }
   .grade-desc { text-align: center; margin-bottom: 1.5rem; padding: 0 0.5rem; line-height: 1.7; }
   .breakdown { background: var(--sheet); border-top: 2px solid var(--ink); padding: 1.25rem; margin-bottom: 1.2rem; }
   .breakdown-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--leaf); font-weight: 600; margin-bottom: 1rem; text-align: center; }
   .bd-row { display: grid; grid-template-columns: 1fr 100px 46px; gap: 0.7rem; align-items: center; margin-bottom: 0.7rem; font-size: 0.86rem; }
-  .bd-name { font-family: var(--sans); font-size: 0.82rem; }
+  .bd-name {  font-size: 0.82rem; }
   .bd-bar { height: 8px; background: var(--rail); overflow: hidden; }
   .bd-fill { height: 100%; background: var(--leaf); transition: width 0.4s; }
-  .bd-score { color: var(--ink-soft); text-align: right; font-weight: 600; font-family: var(--sans); }
+  .bd-score { color: var(--ink-soft); text-align: right; font-weight: 600;  }
   .compare { background: var(--white); border-top: 1px solid var(--hair); border-left: 3px solid var(--leaf); padding: 1.1rem 1.2rem; margin-bottom: 1.2rem; }
   .compare label { display: block; font-family: var(--sans); font-size: 0.8rem; margin-bottom: 0.5rem; }
   .compare input { font-family: var(--sans); font-size: 1rem; padding: 0.5rem 0.6rem; width: 5.5rem; border: 1px solid var(--hair); background: var(--sheet); color: var(--ink); }
   .compare-out { margin-top: 0.8rem; font-size: 0.95rem; line-height: 1.65; }
   .hidden { display: none !important; }
-  .footer { text-align: center; font-family: var(--sans); font-size: 0.76rem; color: var(--ink-soft); margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--hair); line-height: 1.65; }
+  .footer { text-align: center;  font-size: 0.76rem; color: var(--ink-soft); margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--hair); line-height: 1.65; }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="themebar"><button class="themebtn" id="theme-btn" type="button">Bright light</button></div>
-
 
   <div id="start-screen">
     <div class="header-block">
@@ -210,7 +203,7 @@ const ITEMS = [
       "Pik Botha"
     ],
     "correct": 0,
-    "explanation": "{opt0}, after a stroke and a quarrel with his own party. {opt1} had gone in 1978 and {opt2} was killed in 1966. {opt3} was a minister, not the president. You need the handover in your context paragraph, because it is where the memo starts. Get the handover right and your context paragraph earns its marks.",
+    "explanation": "{opt0}, after a stroke and a fight with his own party. {opt1} had gone in 1978. {opt2} was killed in 1966. The handover belongs in your context paragraph, because it is where the story starts.",
     "section": "Why Anyone Sat Down",
     "tier": "Recall"
   },
@@ -223,7 +216,7 @@ const ITEMS = [
       "10 May 1994"
     ],
     "correct": 0,
-    "explanation": "{opt0}. The unbanning announcement came nine days earlier, on {opt1}. {opt2} is the election and {opt3} the inauguration, both four years later. A marker reads an exact date as evidence and a vague one as background. Use the exact date and you earn an evidence mark.",
+    "explanation": "{opt0}. The unbanning came nine days earlier, on {opt1}. {opt2} is the election and {opt3} the inauguration, four years later.",
     "section": "Why Anyone Sat Down",
     "tier": "Recall"
   },
@@ -236,7 +229,7 @@ const ITEMS = [
       "Why the Conservative Party refused to attend the CODESA talks"
     ],
     "correct": 0,
-    "explanation": "{opt0}. A deadlock makes talking possible without making it happen. You need that gap, because it is where the marks for political will sit. {opt1}, {opt2} and {opt3} each have their own separate causes and none of them follows from the deadlock alone.",
+    "explanation": "{opt0}. Being stuck made talking possible. It didn't make anyone talk. That difference is what the question is about, because it asks what leaders chose to do.",
     "section": "Why Anyone Sat Down",
     "tier": "Understand"
   },
@@ -249,7 +242,7 @@ const ITEMS = [
       "The error is that it was PW Botha who ordered his release"
     ],
     "correct": 0,
-    "explanation": "{opt0} is the error. Botha made that conditional offer in 1985 and Mandela refused it. The 1990 release carried no conditions. {opt1} accepts the mistake, {opt2} moves the year and {opt3} swaps the president. That difference is worth a mark to you. Refusing the 1985 offer is what made the 1990 release unconditional.",
+    "explanation": "{opt0}. Botha made that offer in 1985 and Mandela turned it down. The 1990 release had no conditions on it. Turning down the 1985 offer is what made the 1990 release unconditional.",
     "section": "Why Anyone Sat Down",
     "tier": "Apply"
   },
@@ -262,7 +255,7 @@ const ITEMS = [
       "Repeal the apartheid laws"
     ],
     "correct": 0,
-    "explanation": "{opt0}. {opt1} and {opt2} had both already happened in February 1990, six months earlier. {opt3} was never agreed at any negotiating meeting. You need both halves of this pairing to show a concession on each side. Name both halves and you earn the mark for a concession on each side.",
+    "explanation": "{opt0}. {opt1} and {opt2} both happened in February 1990, six months earlier. Both halves together show a concession on each side.",
     "section": "Agreements Nobody Had to Keep",
     "tier": "Recall"
   },
@@ -275,7 +268,7 @@ const ITEMS = [
       "Shell House, the ANC head office in Johannesburg"
     ],
     "correct": 0,
-    "explanation": "{opt0}, which is also where the AWB drove in an armoured vehicle in 1993. {opt1} hosted the 1990 talks. {opt2} is the seat of government. {opt3} was the ANC head office. Naming the venue costs you one clause and gains you an evidence mark from the marker.",
+    "explanation": "{opt0}, which is also where the AWB drove in an armoured vehicle in 1993. {opt1} hosted the 1990 talks. {opt3} was the ANC head office.",
     "section": "Agreements Nobody Had to Keep",
     "tier": "Recall"
   },
@@ -288,7 +281,7 @@ const ITEMS = [
       "Because it was signed before Nelson Mandela had been released from prison"
     ],
     "correct": 0,
-    "explanation": "{opt0}. Agreeing where you are going is not agreeing how to get there. The hard question was what share of an elected assembly would have to agree before a clause entered the constitution. {opt1}, {opt2} and {opt3} are all wrong in fact or in timing. CODESA 2 deadlocked on exactly that number in May 1992. Use it to explain the deadlock and you earn analysis marks.",
+    "explanation": "{opt0}. Agreeing where you're going is not agreeing how to get there. The hard question was what share of an elected assembly had to agree before a clause went in. CODESA 2 broke on exactly that in May 1992.",
     "section": "Agreements Nobody Had to Keep",
     "tier": "Understand"
   },
@@ -301,7 +294,7 @@ const ITEMS = [
       "The referendum was held only after CODESA had already collapsed"
     ],
     "correct": 0,
-    "explanation": "{opt0} is the error. The National Party had been losing by-elections to the Conservative Party. A no vote would have ended the talks and his career. {opt1}, {opt2} and {opt3} are all factually wrong, and the referendum in March came two months before CODESA 2 broke down. The risk is exactly what makes the referendum evidence of political will, so do not describe it as safe. If you call the referendum safe, you lose the point.",
+    "explanation": "{opt0}. His party had been losing by-elections to the Conservative Party. A no vote would have ended the talks and his career. Calling it safe throws away the best example of political will in the topic.",
     "section": "Agreements Nobody Had to Keep",
     "tier": "Apply"
   },
@@ -314,7 +307,7 @@ const ITEMS = [
       "The date of the first election was brought forward"
     ],
     "correct": 0,
-    "explanation": "{opt0}. {opt1} is wrong. {opt2} came three months later, in September, and it restarted the talks rather than following the attack at once. {opt3} is wrong. You need the collapse in your essay, because it is the strongest evidence against your own line. A marker rewards you for answering the strongest evidence against your own line.",
+    "explanation": "{opt0}. {opt2} came three months later, in September, and it's what restarted the talks rather than what followed the attack. This break is the strongest thing anyone can say against the political will argument.",
     "section": "The Year It Should Have Ended",
     "tier": "Recall"
   },
@@ -327,7 +320,7 @@ const ITEMS = [
       "To force Inkatha into signing the National Peace Accord"
     ],
     "correct": 0,
-    "explanation": "{opt0}. This was political pressure, not a wage dispute, so {opt1} is wrong. It came after the referendum, so {opt2} is wrong. {opt3} is wrong. A strike makes the cost of a collapsed negotiation visible, and saying so turns a fact into an argument. Say what the strike was for and you earn more than a naming mark.",
+    "explanation": "{opt0}. This was political pressure, not a pay dispute. It also came after the referendum, not before it.",
     "section": "The Year It Should Have Ended",
     "tier": "Understand"
   },
@@ -340,7 +333,7 @@ const ITEMS = [
       "Because it was signed by all twenty seven peace accord organisations"
     ],
     "correct": 0,
-    "explanation": "{opt0}. The timing is the argument. Nothing forced either side to return after an attack that had ended the talks. {opt1} is wrong, because Groote Schuur came two years earlier. {opt2} and {opt3} are wrong. Say three months in your paragraph and the evidence does the judging for you. Write three months in your paragraph and a marker sees the judgement without you asserting it.",
+    "explanation": "{opt0}. The timing is the whole point. Nothing forced either side back after an attack that had ended the talks. Three months is the detail that does the arguing for you.",
     "section": "The Year It Should Have Ended",
     "tier": "Understand"
   },
@@ -353,7 +346,7 @@ const ITEMS = [
       "The appeal came only after the AWB attack later that year"
     ],
     "correct": 0,
-    "explanation": "{opt0} is the error. Mandela spoke to the nation while the state was still run by the National Party. {opt1} accepts the mistake. {opt2} and {opt3} are wrong. That detail is the mark, because a man with no official power calmed the country. Name the office he did not hold and you earn the evidence mark.",
+    "explanation": "{opt0}. Mandela spoke to the country while the National Party still ran the state. He couldn't order anyone to do anything, which is what makes it evidence rather than a fact.",
     "section": "The Year It Should Have Ended",
     "tier": "Apply"
   },
@@ -366,7 +359,7 @@ const ITEMS = [
       "Cyril Ramaphosa of the African National Congress"
     ],
     "correct": 0,
-    "explanation": "{opt0}, which is what makes this such strong evidence. The leader of the Communist Party proposed keeping apartheid civil servants in their jobs. {opt1} and {opt3} negotiated the Record of Understanding. {opt2} stayed outside until the final week. Name him and his party, because that one detail earns you the mark.",
+    "explanation": "{opt0}. That's what makes it such good evidence. The leader of the Communist Party suggested keeping apartheid civil servants in their jobs. {opt1} and {opt3} negotiated the Record of Understanding.",
     "section": "Getting to the Vote",
     "tier": "Recall"
   },
@@ -379,7 +372,7 @@ const ITEMS = [
       "The Freedom Front, formed by right-wing Afrikaners"
     ],
     "correct": 0,
-    "explanation": "{opt0}. {opt1} took part from the start of the campaign. {opt2} stayed out of the election. {opt3} was formed by right-wing Afrikaners who chose to contest the election rather than fight it. Getting these four straight stops your last paragraph turning into a blur of party names. Keep the four parties straight and you stop losing marks in your last paragraph.",
+    "explanation": "{opt0}. {opt1} campaigned from the start. {opt2} stayed out of the election. {opt3} was formed by right-wing Afrikaners who chose to stand instead of fight.",
     "section": "Getting to the Vote",
     "tier": "Recall"
   },
@@ -392,7 +385,7 @@ const ITEMS = [
       "Because the dates of the election had been changed at short notice"
     ],
     "correct": 0,
-    "explanation": "{opt0}. The papers were printed without the party on them, so stickers were added. {opt1}, {opt2} and {opt3} are all wrong. It is a small administrative fact. Use it and you show a marker exactly how narrow the margin was.",
+    "explanation": "{opt0}. The papers were printed without the party on them, so stickers went on. It's a small administrative fact that shows exactly how narrow the margin was.",
     "section": "Getting to the Vote",
     "tier": "Understand"
   },
@@ -405,7 +398,7 @@ const ITEMS = [
       "The Democratic Party and the Pan Africanist Congress"
     ],
     "correct": 0,
-    "explanation": "{opt0}, because they were the only other parties above the five per cent line. The parties in {opt1}, {opt2} and {opt3} won seats in parliament without reaching that threshold. Link the result back to the sunset clause and your conclusion answers the question instead of summarising it. A marker pays for that link.",
+    "explanation": "{opt0}, because they were the only other parties over five per cent. The parties in {opt1} and {opt3} won seats without reaching it.",
     "section": "The Settlement Itself",
     "tier": "Recall"
   },
@@ -418,7 +411,7 @@ const ITEMS = [
       "That the election result was being disputed by the other parties"
     ],
     "correct": 0,
-    "explanation": "{opt0}. The leader of the party that had run apartheid became a deputy president. {opt1}, {opt2} and {opt3} are all wrong. This unit has defined political will as an agreement kept when keeping it is expensive. Say that in your conclusion and you earn a judgement mark.",
+    "explanation": "{opt0}. The leader of the party that ran apartheid became a deputy president. This unit has said political will means keeping a deal when keeping it is expensive, and that is what this was.",
     "section": "The Settlement Itself",
     "tier": "Understand"
   },
@@ -431,7 +424,7 @@ const ITEMS = [
       "There is no error here, because both of those dates are correct"
     ],
     "correct": 0,
-    "explanation": "{opt0}. Stretching the range to 2003 pulls in years the question never asked about. {opt1} is wrong as a boundary, though contact did begin before 1989, and you use that only to explain 1990. {opt2} is wrong. {opt3} accepts the mistake. Check the dates in the question before you plan, because content outside them scores nothing.",
+    "explanation": "{opt0}. Stretching it to 2003 pulls in years the question never asked about. Contact did begin before 1989, but that only explains 1990. Check the dates in the question before you plan.",
     "section": "The Settlement Itself",
     "tier": "Apply"
   }
@@ -550,7 +543,7 @@ function render(){
   });
   qCard.innerHTML='<div class="stage-tag"><span class="chip '+TIERCLS[item.tier]+'">'+TIERLABEL[item.tier]+'</span></div>'
     +'<div class="q-text">'+resolve(item.q)+'</div><div class="options">'+optsHtml+'</div>'
-    +(revealed?'<div class="explanation"><div class="expl-label">Why</div><div class="expl-text">'+item.explanation+'</div></div>':'');
+    +(revealed?'<div class="explanation"><div class="expl-label">Why</div><div class="expl-text">'+resolve(item.explanation)+'</div></div>':'');
   if(!revealed){
     qCard.querySelectorAll("[data-opt]").forEach(b=>{
       b.addEventListener("click",()=>{ state.answers[gi]=parseInt(b.dataset.opt); state.revealed[gi]=true; render(); });
@@ -616,11 +609,6 @@ function showResults(){
 
 buildPicker();
 
-const themeBtn=document.getElementById("theme-btn");
-themeBtn.addEventListener("click",()=>{
-  const bright=document.body.classList.toggle("bright");
-  themeBtn.textContent = bright ? "Low light" : "Bright light";
-});
 </script>
 </body>
 </html>
