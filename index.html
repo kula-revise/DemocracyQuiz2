@@ -32,30 +32,32 @@
     --sans: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --serif: Georgia, 'Times New Roman', serif;
   }
-  /* Bright light inversion, kept but not exposed. Add class "bright" to body to switch. */
-  body.bright {
-    --paper: #F1EEE7;
-    --sheet: #FAF8F3;
-    --white: #FFFDF8;
-    --ink: #14243E;
-    --ink-soft: #5A6779;
-    --flame: #B4501B;
-    --on-flame: #FFFDF8;
-    --leaf: #2E7D5B;
-    --on-leaf: #FFFDF8;
-    --hair: rgba(20,36,62,0.18);
-    --rail: rgba(20,36,62,0.12);
-    --tint: rgba(46,125,91,0.07);
-    --tint-rule: rgba(46,125,91,0.35);
-    --slot-bg: rgba(255,255,255,0.5);
-    --chipA-bg: #F5E2D3; --chipA-fg: #8A3A0C;
-    --chipB-bg: #DCE5F0; --chipB-fg: #33415A;
-    --chipN-bg: #E5E3DC; --chipN-fg: #4E5666;
-    --ev3-bg: #F5E2D3; --ev3-fg: #8A3A0C;
-    --ok-bg: rgba(46,125,91,0.12);
-    --bad-bg: rgba(20,36,62,0.06); --bad-border: #94A0B0;
-    --btn-hover: #96410F;
-    --start-hover: #0B182B;
+  /* Alternate mode. The series identity always lives in :root. This is its inversion. */
+  body.alt {
+      /* Cool slate. The navy ground inverted into blue paper, not bone,
+         so it cannot be mistaken for the Black Power light mode. */
+      --paper: #E4EAF1;
+      --sheet: #F2F6FA;
+      --white: #FBFDFF;
+      --ink: #14243E;
+      --ink-soft: #56657C;
+      --flame: #B4501B;
+      --on-flame: #FBFDFF;
+      --leaf: #267051;
+      --on-leaf: #FBFDFF;
+      --hair: rgba(20,36,62,0.20);
+      --rail: rgba(20,36,62,0.13);
+      --tint: rgba(38,112,81,0.08);
+      --tint-rule: rgba(38,112,81,0.38);
+      --slot-bg: rgba(255,255,255,0.62);
+      --chipA-bg: #F6DFCE; --chipA-fg: #8A3A0C;
+      --chipB-bg: #D3DFEE; --chipB-fg: #2C3B55;
+      --chipN-bg: #DBE2EA; --chipN-fg: #4A5768;
+      --ev3-bg: #D6E8DD; --ev3-fg: #1E5A3E;
+      --ok-bg: rgba(38,112,81,0.13);
+      --bad-bg: rgba(20,36,62,0.07); --bad-border: #8C9AAC;
+      --btn-hover: #96410F;
+      --start-hover: #0B182B;
   }
   .flourish .rule-ink { stroke: var(--ink); }
   .flourish .rule-accent { stroke: var(--flame); }
@@ -131,9 +133,39 @@
   .compare-out { margin-top: 0.8rem; font-size: 0.95rem; line-height: 1.65; }
   .hidden { display: none !important; }
   .footer { text-align: center;  font-size: 0.76rem; color: var(--ink-soft); margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--hair); line-height: 1.65; }
-</style>
+
+.kdone-back { position: fixed; inset: 0; background: rgba(8,16,28,0.72); display: flex; align-items: center; justify-content: center; padding: 1.2rem; z-index: 60; }
+.kdone-back.hidden { display: none; }
+.kdone { background: var(--sheet); border-top: 3px solid var(--flame); max-width: 24rem; width: 100%; padding: 1.6rem 1.5rem 1.5rem; text-align: center; }
+.kdone-label { font-family: var(--sans, inherit); font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--leaf); font-weight: 600; margin-bottom: 0.7rem; }
+.kdone p { font-size: 1rem; line-height: 1.7; color: var(--ink); margin-bottom: 1.3rem; }
+
+    /* Mode toggle. Bottom right, thumb reachable, under any modal. */
+    .mode-toggle {
+      position: fixed; bottom: 0.9rem; right: 0.9rem; z-index: 40;
+      display: flex; align-items: center; gap: 0.4rem;
+      font-family: var(--sans); font-size: 0.66rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.55rem 0.75rem; min-height: 2.4rem;
+      background: var(--sheet); color: var(--ink-soft);
+      border: 1px solid var(--hair); cursor: pointer;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.22);
+    }
+    .mode-toggle:hover { color: var(--ink); border-color: var(--flame); }
+    .mode-toggle:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+    .mode-toggle svg { width: 0.9rem; height: 0.9rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
+    @media print { .mode-toggle { display: none; } }
+  </style>
 </head>
 <body>
+
+<script>
+try{ if(localStorage.getItem("kula-mode")==="alt"){ document.body.classList.add("alt"); } }catch(e){}
+</script>
+<button class="mode-toggle" id="mode-toggle" type="button" aria-pressed="false" data-native="dark">
+  <svg viewBox="0 0 24 24" aria-hidden="true" id="mode-icon"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+  <span id="mode-label">Light Mode</span>
+</button>
 <div class="container">
 
   <div id="start-screen">
@@ -187,7 +219,7 @@
       <div class="stage-tag"><span class="chip chip-recall">Next</span></div>
       <p>Look at the section breakdown above, not the total. Go back to the lesson covering your weakest section and run it again.</p><p>Then write the essay question out by hand in one hour, with nothing in front of you.</p>
     </div>
-    <div class="nav" style="justify-content:center;"><button class="btn-primary" id="redo-btn">&#8635; Choose again</button></div>
+    <div class="nav" style="justify-content:center;"><button class="btn-primary" id="kdone-btn">Finish &rarr;</button><button class="btn-secondary" id="redo-btn">&#8635; Choose again</button></div>
     <div class="footer">The essay: NSC History P2, May and June 2025, Question 5.</div>
   </div>
 </div>
@@ -609,6 +641,33 @@ function showResults(){
 
 buildPicker();
 
+
+(function(){var m=document.getElementById("kdone-modal"),b=document.getElementById("kdone-btn"),c=document.getElementById("kdone-close");if(b&&m)b.addEventListener("click",function(){m.classList.remove("hidden");});if(c&&m)c.addEventListener("click",function(){m.classList.add("hidden");});})();
+
+(function(){
+  var b=document.getElementById("mode-toggle"), lab=document.getElementById("mode-label"), ic=document.getElementById("mode-icon");
+  if(!b) return;
+  var SUN='<circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>';
+  var MOON='<path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/>';
+  var native=b.getAttribute("data-native");
+  function paint(){
+    var onAlt=document.body.classList.contains("alt");
+    var showing = onAlt ? (native==="dark" ? "light" : "dark") : native;
+    var offering = showing==="dark" ? "light" : "dark";
+    lab.textContent = offering==="light" ? "Light Mode" : "Dark Mode";
+    ic.innerHTML = offering==="light" ? SUN : MOON;
+    b.setAttribute("aria-pressed", onAlt ? "true" : "false");
+    b.setAttribute("aria-label", "Switch to " + (offering==="light" ? "light" : "dark") + " mode");
+  }
+  b.addEventListener("click",function(){
+    var onAlt=document.body.classList.toggle("alt");
+    try{ localStorage.setItem("kula-mode", onAlt ? "alt" : "native"); }catch(e){}
+    paint();
+  });
+  paint();
+})();
 </script>
+
+  <div class="kdone-back hidden" id="kdone-modal"><div class="kdone"><div class="kdone-label">Unit complete</div><p>Congratulations on finishing the unit. Come back to any lesson, or all of them, whenever you want to revise.</p><button class="btn-primary" id="kdone-close">Got it</button></div></div>
 </body>
 </html>
