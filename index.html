@@ -29,7 +29,7 @@
     --bad-bg: rgba(159,173,192,0.10); --bad-border: #7C8AA0;
     --btn-hover: #C55D2B;
     --start-hover: #24384F;
-    --sans: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --serif: Georgia, 'Times New Roman', serif;
   }
   /* Alternate mode. The series identity always lives in :root. This is its inversion. */
@@ -134,7 +134,7 @@
   .hidden { display: none !important; }
   .footer { text-align: center;  font-size: 0.76rem; color: var(--ink-soft); margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--hair); line-height: 1.65; }
 
-.kdone-back { position: fixed; inset: 0; background: rgba(8,16,28,0.72); display: flex; align-items: center; justify-content: center; padding: 1.2rem; z-index: 60; }
+.kdone-back { position: fixed; inset: 0; background: var(--scrim, rgba(27,42,51,0.5)); display: flex; align-items: center; justify-content: center; padding: 1.2rem; z-index: 90; }
 .kdone-back.hidden { display: none; }
 .kdone { background: var(--sheet); border-top: 3px solid var(--flame); max-width: 24rem; width: 100%; padding: 1.6rem 1.5rem 1.5rem; text-align: center; }
 .kdone-label { font-family: var(--sans, inherit); font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--leaf); font-weight: 600; margin-bottom: 0.7rem; }
@@ -644,7 +644,7 @@ function showResults(){
 buildPicker();
 
 
-(function(){var m=document.getElementById("kdone-modal"),b=document.getElementById("kdone-btn"),c=document.getElementById("kdone-close");if(b&&m)b.addEventListener("click",function(){m.classList.remove("hidden");});if(c&&m)c.addEventListener("click",function(){m.classList.add("hidden");});})();
+(function(){document.addEventListener("click",function(e){var m=document.getElementById("kdone-modal");if(!m||!e.target.closest)return;if(e.target.closest("#kdone-btn")){m.classList.remove("hidden");}else if(e.target.closest("#kdone-close")){m.classList.add("hidden");}});})();
 
 (function(){
   var b=document.getElementById("mode-toggle"), lab=document.getElementById("mode-label"), ic=document.getElementById("mode-icon");
@@ -670,6 +670,6 @@ buildPicker();
 })();
 </script>
 
-  <div class="kdone-back hidden" id="kdone-modal"><div class="kdone"><div class="kdone-label">Unit complete</div><p>Congratulations on finishing the unit. Come back to any lesson, or all of them, whenever you want to revise.</p><button class="btn-primary" id="kdone-close">Done</button></div></div>
+  <div class="kdone-back hidden" id="kdone-modal"><div class="kdone"><div class="kdone-label">Unit complete</div><p>Congratulations on completing Coming of Democracy in South Africa. Come back here whenever you need to revise for a test or exam.</p><button class="btn-primary" id="kdone-close">Done</button></div></div>
 </body>
 </html>
