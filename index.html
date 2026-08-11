@@ -29,11 +29,11 @@
     --bad-bg: rgba(159,173,192,0.10); --bad-border: #7C8AA0;
     --btn-hover: #C55D2B;
     --start-hover: #24384F;
-    --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --sans: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --serif: Georgia, 'Times New Roman', serif;
   }
   /* Alternate mode. The series identity always lives in :root. This is its inversion. */
-  body.alt {
+  body.bright {
       /* Cool slate. The navy ground inverted into blue paper, not bone,
          so it cannot be mistaken for the Black Power light mode. */
       --paper: #E4EAF1;
@@ -134,14 +134,14 @@
   .hidden { display: none !important; }
   .footer { text-align: center;  font-size: 0.76rem; color: var(--ink-soft); margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--hair); line-height: 1.65; }
 
-.kdone-back { position: fixed; inset: 0; background: var(--scrim, rgba(27,42,51,0.5)); display: flex; align-items: center; justify-content: center; padding: 1.2rem; z-index: 90; }
+.kdone-back { position: fixed; inset: 0; background: rgba(8,16,28,0.72); display: flex; align-items: center; justify-content: center; padding: 1.2rem; z-index: 60; }
 .kdone-back.hidden { display: none; }
 .kdone { background: var(--sheet); border-top: 3px solid var(--flame); max-width: 24rem; width: 100%; padding: 1.6rem 1.5rem 1.5rem; text-align: center; }
 .kdone-label { font-family: var(--sans, inherit); font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--leaf); font-weight: 600; margin-bottom: 0.7rem; }
 .kdone p { font-size: 1rem; line-height: 1.7; color: var(--ink); margin-bottom: 1.3rem; }
 
     /* Mode toggle. Bottom right, thumb reachable, under any modal. */
-    .mode-toggle {
+    #kula-mode-toggle {
       position: fixed; bottom: 0.9rem; right: 0.9rem; z-index: 40;
       display: flex; align-items: center; gap: 0.4rem;
       font-family: var(--sans); font-size: 0.66rem; font-weight: 600;
@@ -151,23 +151,23 @@
       border: 1px solid var(--hair); cursor: pointer;
       box-shadow: 0 2px 12px rgba(0,0,0,0.22);
     }
-    .mode-toggle:hover { color: var(--ink); border-color: var(--flame); }
-    .mode-toggle:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
-    .mode-toggle svg { width: 0.9rem; height: 0.9rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
-    @media print { .mode-toggle { display: none; } }
+    #kula-mode-toggle:hover { color: var(--ink); border-color: var(--flame); }
+    #kula-mode-toggle:focus-visible { outline: 2px solid var(--flame); outline-offset: 2px; }
+    #kula-mode-toggle svg { width: 0.9rem; height: 0.9rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
+    @media print { #kula-mode-toggle { display: none; } }
   
-#kula-mode-toggle, .mode-toggle { min-height: 44px !important; padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; box-sizing: border-box !important; }
-#next-btn, #begin-btn, #kdone-btn, #kretake-btn { min-height: 44px !important; }</style>
+#kula-mode-toggle, #kula-mode-toggle { min-height: 44px !important; padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; box-sizing: border-box !important; }
+#next-btn, #begin-btn, #kdone-btn, #kretake-btn { min-height: 44px !important; }#kula-mode-toggle #kmt-icon svg{width:1rem;height:1rem;display:block;}
+</style>
 </head>
 <body>
+<script>/* kula: LMS embed events. "completed" fires once, when the learner reaches the closing screen. "advance" fires from the final button. */
+(function(){var sentCompleted=false;window.kulaEmbed=function(ev){if(ev==="completed"){if(sentCompleted)return;sentCompleted=true;}try{window.parent.postMessage({type:"lms-embed-event",version:"1.0",payload:{event:ev}},"*");}catch(e){}};})();</script>
 
 <script>
-try{ if(localStorage.getItem("kula-mode")==="alt"){ document.body.classList.add("alt"); } }catch(e){}
+try{ if(localStorage.getItem("kula-mode")==="bright"){ document.body.classList.add("bright"); } }catch(e){}
 </script>
-<button class="mode-toggle" id="mode-toggle" type="button" aria-pressed="false" data-native="dark">
-  <svg viewBox="0 0 24 24" aria-hidden="true" id="mode-icon"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
-  <span id="mode-label">Light Mode</span>
-</button>
+<button id="kula-mode-toggle" type="button" onclick="kulaToggle()" aria-label="Switch between light and dark mode"><span id="kmt-icon"></span><span id="kmt-label"></span></button>
 <div class="container">
 
   <div id="start-screen">
@@ -221,7 +221,7 @@ try{ if(localStorage.getItem("kula-mode")==="alt"){ document.body.classList.add(
       <div class="stage-tag"><span class="chip chip-recall">Next</span></div>
       <p>Look at the section breakdown above, not the total. Go back to the lesson covering your weakest section and run it again.</p><p>Then write the essay question out by hand in one hour, with nothing in front of you.</p>
     </div>
-    <div class="nav" style="justify-content:center;"><button class="btn-primary" id="kdone-btn">Finish &rarr;</button><button class="btn-secondary" id="redo-btn">&#8635; Choose again</button></div>
+    <div class="nav" style="justify-content:center;"><button class="btn-primary" id="kdone-btn">Finish this unit &rarr;</button><button class="btn-secondary" id="redo-btn">&#8635; Choose again</button></div>
     <div class="footer">The essay: Grade 12 History, Paper 2.</div>
   </div>
 </div>
@@ -589,6 +589,7 @@ function render(){
 }
 
 function showResults(){
+  kulaEmbed("completed");
   quizScreen.classList.add("hidden");
   resultsScreen.classList.remove("hidden");
   let correct=0;
@@ -644,32 +645,11 @@ function showResults(){
 buildPicker();
 
 
-(function(){document.addEventListener("click",function(e){var m=document.getElementById("kdone-modal");if(!m||!e.target.closest)return;if(e.target.closest("#kdone-btn")){m.classList.remove("hidden");}else if(e.target.closest("#kdone-close")){m.classList.add("hidden");}});})();
+(function(){document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("#kdone-btn")){kulaEmbed("advance");}});})();
 
-(function(){
-  var b=document.getElementById("mode-toggle"), lab=document.getElementById("mode-label"), ic=document.getElementById("mode-icon");
-  if(!b) return;
-  var SUN='<circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>';
-  var MOON='<path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/>';
-  var native=b.getAttribute("data-native");
-  function paint(){
-    var onAlt=document.body.classList.contains("alt");
-    var showing = onAlt ? (native==="dark" ? "light" : "dark") : native;
-    var offering = showing==="dark" ? "light" : "dark";
-    lab.textContent = offering==="light" ? "Light Mode" : "Dark Mode";
-    ic.innerHTML = offering==="light" ? SUN : MOON;
-    b.setAttribute("aria-pressed", onAlt ? "true" : "false");
-    b.setAttribute("aria-label", "Switch to " + (offering==="light" ? "light" : "dark") + " mode");
-  }
-  b.addEventListener("click",function(){
-    var onAlt=document.body.classList.toggle("alt");
-    try{ localStorage.setItem("kula-mode", onAlt ? "alt" : "native"); }catch(e){}
-    paint();
-  });
-  paint();
-})();
+var K="kula-theme";var SUN="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='4.2'/><path d='M12 1.6v2M12 20.4v2M3.6 12h-2M22.4 12h-2M5.6 5.6 4.2 4.2M19.8 19.8l-1.4-1.4M18.4 5.6l1.4-1.4M4.2 19.8l1.4-1.4'/></svg>";var MOON="<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z'/></svg>";function paint(){var d=!document.body.classList.contains("bright");var ic=document.getElementById("kmt-icon"),la=document.getElementById("kmt-label");if(ic)ic.innerHTML=d?SUN:MOON;if(la)la.textContent=d?"Light mode":"Dark mode";}window.kulaToggle=function(){document.body.classList.toggle("bright");try{localStorage.setItem(K,document.body.classList.contains("bright")?"bright":"dark")}catch(e){}paint();};try{if(localStorage.getItem(K)==="bright")document.body.classList.add("bright")}catch(e){}paint();
 </script>
 
-  <div class="kdone-back hidden" id="kdone-modal"><div class="kdone"><div class="kdone-label">Unit complete</div><p>Congratulations on completing Coming of Democracy in South Africa. Come back here whenever you need to revise for a test or exam.</p><button class="btn-primary" id="kdone-close">Done</button></div></div>
+  
 </body>
 </html>
